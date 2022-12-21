@@ -40,3 +40,11 @@ def list_customer(request):
 	return render(request,'adm/list-customer.html',context)
 
 ######################################################################################################
+
+@user_passes_test(lambda u: u.is_superuser)
+def customer_details(request,name):
+	customer = Customer.objects.get(Name=name)
+	context = {
+		'customer' : customer
+	}
+	return render(request,'adm/customer-details.html',context)

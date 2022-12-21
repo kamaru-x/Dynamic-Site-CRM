@@ -72,7 +72,7 @@
             <td>{{customer.Mobile}}</td>
             <td>{{customer.Domains}}</td>
             <td>
-              <a href=""><button class="btn btn-success">view</button></a>
+              <a href="{% url 'customer-details' customer.Name %}"><button class="btn btn-success">view</button></a>
             </td>
             <td>
               <a href=""><button class="btn btn-primary">Edit</button></a>
