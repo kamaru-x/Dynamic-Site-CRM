@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import user_passes_test,login_required
 from django.contrib.auth.models import User
-from administrator.models import Country,Customer
+from administrator.models import Country,Customer,Domain
+from datetime import date
 
 # Create your views here.
 
@@ -44,7 +45,47 @@ def list_customer(request):
 @user_passes_test(lambda u: u.is_superuser)
 def customer_details(request,name):
 	customer = Customer.objects.get(Name=name)
+	domains = Domain.objects.filter(Customer_Name=customer)
+	count = domains.count()
+	
+	context = {
+		'customer' : customer,
+		'domains' : domains,
+		'count' : count,
+	}
+	return render(request,'adm/customer-details.html',context)
+
+######################################################################################################
+
+@user_passes_test(lambda u: u.is_superuser)
+def add_domain(request):
+	customers = Customer.objects.all()
+	if request.method == 'POST':
+		customer = request.POST.get('customer')
+		domain = request.POST.get('domain')
+		s_date = request.POST.get('date')
+		r_date = s_date
+		cus = Customer.objects.get(id=customer)
+		data = Domain(Customer_Name=cus,Domain_Name=domain,Purchase_Date=s_date,Renewal_Date=r_date)
+		data.save()
+	context = {
+		'customers' : customers
+	}
+	return render(request,'adm/add-domain.html',context)
+
+######################################################################################################
+
+@user_passes_test(lambda u: u.is_superuser)
+def edit_customer(request,name):
+	customer = Customer.objects.get(Name=name)
+	if request.method == "POST" :
+		customer.Name = request.POST.get('name')
+		customer.Email = request.POST.get('email')
+		customer.Mobile = request.POST.get('mobile')
+		customer.Country = request.POST.get('country_selector_code')
+		customer.save()
+		return redirect('.')
 	context = {
 		'customer' : customer
 	}
-	return render(request,'adm/customer-details.html',context)
+	return render(request,'adm/edit-customer.html',context)

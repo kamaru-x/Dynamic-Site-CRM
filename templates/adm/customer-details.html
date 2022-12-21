@@ -73,7 +73,7 @@
                   <p class="mb-0">Total Domains</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">{{customer.Domains}}</p>
+                  <p class="text-muted mb-0">{{count}}</p>
                 </div>
               </div>
             </div>
@@ -93,16 +93,18 @@
                       </tr>
                     </thead>
                     <tbody class="list text-center">
+                      {% for domain in domains %}
                         <tr>
                           <td>{{forloop.counter}}</td> 
-                          <td>Customer.com</td>
+                          <td>{{domain.Domain_Name}}</td>
                           <td>active</td>
-                          <td>11-12-2022</td>
-                          <td>11-12-2023</td>
+                          <td>{{domain.Purchase_Date}}</td>
+                          <td>{{domain.Renewal_Date}}</td>
                           <td>
                             <button class="btn btn-danger">Deactivate</button>
                           </td>
                         </tr>
+                      {% endfor %}
                     </tbody>
                 </table>
             </div>

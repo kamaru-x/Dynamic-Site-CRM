@@ -75,7 +75,7 @@
               <a href="{% url 'customer-details' customer.Name %}"><button class="btn btn-success">view</button></a>
             </td>
             <td>
-              <a href=""><button class="btn btn-primary">Edit</button></a>
+              <a href="{% url 'edit-customer' customer.Name %}"><button class="btn btn-primary">Edit</button></a>
             </td>
             <!-- <td>
               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter-{{forloop.counter}}">Delete</button>

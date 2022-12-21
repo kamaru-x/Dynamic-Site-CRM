@@ -2,6 +2,12 @@ from django.db import models
 
 # Create your models here.
 
+# countries list
+class Country(models.Model):
+    Name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.Name
+
 # model for customer
 class Customer(models.Model):
     Name = models.CharField(max_length=50)
@@ -13,8 +19,13 @@ class Customer(models.Model):
     def __str__(self):
         return self.Name
 
-class Country(models.Model):
-    Name = models.CharField(max_length=100)
+# model for domain
+class Domain(models.Model):
+    Customer_Name = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    Domain_Name = models.CharField(max_length=50)
+    Purchase_Date = models.DateField()
+    Renewal_Date = models.DateField(null=True,blank=True)
+    Amount = models.IntegerField(default=100)
 
     def __str__(self):
-        return self.Name
+        return self.Domain_Name
