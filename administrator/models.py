@@ -8,6 +8,7 @@ class Customer(models.Model):
     Email = models.EmailField()
     Mobile = models.CharField(max_length=15)
     Country = models.CharField(max_length=50)
+    Domains = models.IntegerField(default=0)
 
     def __str__(self):
         return self.Name

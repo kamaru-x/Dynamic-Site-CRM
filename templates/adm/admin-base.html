@@ -51,7 +51,7 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="">
+              <a class="nav-link active" href="{% url 'admin-home' %}">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
@@ -63,8 +63,7 @@
                   <span class="nav-link-text">Customer</span>
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="{% url 'add-customer' %}">Add Customer</a>
-                    <a class="dropdown-item" href="">Manage Customer</a>
-                    <a class="dropdown-item" href="">List Customer</a>
+                    <a class="dropdown-item" href="{% url 'list-customers' %}">List Customer</a>
                   </div>
                 </a>
               </li>

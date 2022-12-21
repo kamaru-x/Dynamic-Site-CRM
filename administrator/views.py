@@ -30,3 +30,13 @@ def add_customer(request):
 	return render(request,'adm/add-customer.html',context)
 
 ######################################################################################################
+
+@user_passes_test(lambda u: u.is_superuser)
+def list_customer(request):
+	customers = Customer.objects.all()
+	context = {
+		'customers' : customers
+	}
+	return render(request,'adm/list-customer.html',context)
+
+######################################################################################################
