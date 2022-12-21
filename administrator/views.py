@@ -6,4 +6,4 @@ from django.contrib.auth.models import User
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_home(request):
-    return render(request,'admin/home.html')
+    return render(request,'adm/admin-home.html')

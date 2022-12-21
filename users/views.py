@@ -10,4 +10,4 @@ def user_home(request,username):
     context = {
         'user':user
     }
-    return render(request,'user/home.html',context)
+    return render(request,'user/user-home.html',context)
