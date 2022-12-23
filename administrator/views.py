@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.decorators import user_passes_test,login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
-from administrator.models import Country,Customer,Domain
+from administrator.models import Country,Customer,Domain,Tickets,Replayes
 from datetime import date
 
 # Create your views here.
@@ -34,7 +34,7 @@ def add_customer(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def list_customer(request):
-	customers = Customer.objects.all()
+	customers = Customer.objects.all().order_by('-id')
 	context = {
 		'customers' : customers
 	}
@@ -45,7 +45,7 @@ def list_customer(request):
 @user_passes_test(lambda u: u.is_superuser)
 def customer_details(request,name):
 	customer = Customer.objects.get(Name=name)
-	domains = Domain.objects.filter(Customer_Name=customer)
+	domains = Domain.objects.filter(Customer_Name=customer).order_by('-id')
 	count = domains.count()
 	
 	context = {
@@ -59,7 +59,7 @@ def customer_details(request,name):
 
 @user_passes_test(lambda u: u.is_superuser)
 def add_domain(request):
-	customers = Customer.objects.all()
+	customers = Customer.objects.all().order_by('-id')
 	if request.method == 'POST':
 		customer = request.POST.get('customer')
 		domain = request.POST.get('domain')
@@ -89,3 +89,35 @@ def edit_customer(request,name):
 		'customer' : customer
 	}
 	return render(request,'adm/edit-customer.html',context)
+
+######################################################################################################
+
+@user_passes_test(lambda u: u.is_superuser)
+def all_tickets(request):
+	tickets = Tickets.objects.all().order_by('-id')
+	context = {
+		'tickets' : tickets
+	}
+	return render(request,'adm/admin-tickets.html',context)
+
+######################################################################################################
+
+@user_passes_test(lambda u: u.is_superuser)
+def replay_ticket(request,id):
+	usr = request.user
+	replays = Replayes.objects.filter(Ticket__id=id).order_by('-id')
+	ticket = Tickets.objects.get(id=id)
+	if request.method == 'POST' :
+		replay = request.POST.get('message')
+		dt = date.today()
+		attachment = request.FILES['attachment']
+		data = Replayes(Ticket=ticket,Sender=usr,Replay=replay,Date=dt,Attachment=attachment)
+		data.save()
+		return redirect('/replay-ticket/%s'%ticket.id)
+	context = {
+		'replays' : replays,
+		'ticket' : ticket
+	}
+	return render(request,'adm/replay-ticket.html',context)
+
+######################################################################################################

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -29,3 +30,22 @@ class Domain(models.Model):
 
     def __str__(self):
         return self.Domain_Name
+
+class Tickets(models.Model):
+    Creator = models.ForeignKey(User,on_delete=models.CASCADE)
+    Message = models.TextField()
+    Date = models.DateField(null=True,blank=True)
+    Attachment = models.FileField(null=True,blank=True,upload_to='attachments/')
+
+    def __str__(self):
+        return self.Message
+
+class Replayes(models.Model):
+    Ticket = models.ForeignKey(Tickets,on_delete=models.CASCADE)
+    Sender = models.ForeignKey(User,on_delete=models.CASCADE)
+    Replay = models.TextField()
+    Date = models.DateField(null=True,blank=True)
+    Attachment = models.FileField(upload_to='attachments/',null=True,blank=True)
+
+    def __str__(self):
+        return self.Ticket.Message

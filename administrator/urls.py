@@ -7,5 +7,7 @@ urlpatterns = [
     path('list-customers/',views.list_customer,name='list-customers'),
     path('customer/<str:name>/',views.customer_details,name='customer-details'),
     path('add-domain/',views.add_domain,name='add-domain'),
-    path('edit/<str:name>/',views.edit_customer,name='edit-customer')
+    path('edit/<str:name>/',views.edit_customer,name='edit-customer'),
+    path('tickets/',views.all_tickets,name='tickets'),
+    path('replay-ticket/<int:id>',views.replay_ticket,name='replay-ticket'),
 ]

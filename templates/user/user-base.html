@@ -51,7 +51,7 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="">
+              <a class="nav-link active" href="{% url 'user-home' request.user.username %}">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Dashboard</span>
               </a>
@@ -70,14 +70,14 @@
               </li> -->
 
               <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{% url 'list-domains' %}">
                   <i class="ni ni-world-2 text-dark"></i>
                   <span class="nav-link-text">My Domains</span>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{% url 'user-tickets-list' %}">
                   <i class="ni ni-archive-2 text-dark"></i>
                   <span class="nav-link-text">Support Ticket</span>
                 </a>
